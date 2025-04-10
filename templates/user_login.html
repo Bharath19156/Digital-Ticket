@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <div class="container mt-5">
+      <h2>{{ message }}</h2>
+      <h2> {{ email }} </h2>
+      <h2> {{ name }} </h2>
+      <h2> {{ role }} </h2>
+
+      <!-- Dropdown -->
+      <label for="passTypeSelect" class="form-label">Select Pass Type</label>
+      <select id="passTypeSelect" class="form-select">
+        <option value="">-- Select --</option>
+        <option value="student_bus">Student Bus Pass</option>
+        <option value="student_metro">Student Metro Pass</option>
+        <option value="general_bus">General Bus Pass</option>
+        <option value="general_metro">General Metro Pass</option>
+      </select>
+
+      <!-- Student Bus Pass Form -->
+      <div id="studentBusForm" class="mt-3" style="display: none">
+        <h3>Student Bus Pass Form</h3>
+        <form id="studentBusPassForm" action="/studentBusPassForm" method="POST" enctype="multipart/form-data">
+          <!-- 1. Student 10th Details -->
+          <fieldset>
+            <legend>1. Student 10th Details</legend>
+            <div class="mb-3">
+              <label class="form-label" >1.1 SSC Board Type *</label>
+              <select class="form-select" name="ssc_type">
+                <option value="SSC">SSC</option>
+                <option value="CBSE">CBSE</option>
+                <option value="ICSE">ICSE</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" >1.2 SSC Regular/Supplementary *</label>
+              <select class="form-select" name="ssc">
+                <option value="Regular">Regular</option>
+                <option value="Supplementary">Supplementary</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">1.3 SSC Year of Pass *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Year of Pass"
+                name="ssc_pass_year"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">1.4 SSC Hall Ticket No. *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Hall Ticket Number"
+                name="ssc_hall"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">1.5 Date of Birth *</label>
+              <input type="date" class="form-control" name="dob" />
+            </div>
+          </fieldset>
+
+          <!-- 2. Student Details -->
+          <fieldset>
+            <legend>2. Student Details</legend>
+            <div class="mb-3">
+              <label class="form-label">2.1 Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                placeholder="Enter Name"
+                name="name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.2 Father's/Guardian's Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                placeholder="Enter Father's/Guardian's Name"
+                name="gaurdian_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.4 Gender *</label>
+              <div>
+                <input type="radio" name="gender" value="Male" /> Male
+                <input type="radio" name="gender" value="Female" /> Female
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.5 Aadhaar No *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Aadhaar Number"
+                name="aadhar_no"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.6 WhatsApp No *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter WhatsApp Number"
+                name="WhatsApp_no"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.7 Email</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Enter Email"
+                name="email"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.8 Employee Children *</label>
+              <div>
+                <input type="radio" name="employee" value="Yes" /> Yes
+                <input type="radio" name="employee" value="No" /> No
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.9 Upload Photo *</label>
+              <input type="file" class="form-control" name="photo" />
+            </div>
+          </fieldset>
+
+          <!-- 3. Residential Address Details -->
+          <fieldset>
+            <legend>3. Residential Address Details</legend>
+            <div class="mb-3">
+              <label class="form-label">3.1 District *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter District Name"
+                name="district"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.2 Mandal *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Mandal Name"
+                name="mandal"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.3 Village *</label>
+              <input
+                type="text"
+                class="form-control"
+                name="village"
+                placeholder="Enter Village Name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.4 Address *</label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                placeholder="Enter Address"
+                name="address"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.5 Postal Code *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Postal Code"
+                name="postal_code"
+              />
+            </div>
+          </fieldset>
+
+          <!-- 4. Institution Details -->
+          <fieldset>
+            <legend>4. Institution Details</legend>
+            <p>
+              Hyderabad city pass applicants should select the institution
+              address as **HYDERABAD**.
+            </p>
+            <div class="mb-3">
+              <label class="form-label">4.1 District *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter District Name"
+                name="institution_district"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.2 Mandal *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Mandal Name"
+                name="institution_mandal"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.3 Institution Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Institute Name"
+                name="institution_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.4 Course Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Course Name"
+                name="course_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.6 Admission No *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Admission No"
+                name="admission_no"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.7 College ID Photo *</label>
+              <input type="file" class="form-control" name="id_photo" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.8 Institution Address *</label>
+              <textarea class="form-control" name="institution_address"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- 5. Mode of Payment -->
+          <fieldset>
+            <legend>5. Mode of Payment</legend>
+            <div class="mb-3">
+              <label class="form-label">Payment Mode *</label>
+              <select class="form-select" name="payment_mode">
+                <option value="">Select Payment Mode</option>
+                <option value="upi">UPI</option>
+                <option value="netbanking">Netbanking</option>
+                <option value="credit_or_debit_card">Credit/Debit Card </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- 6. Route Details & Pass Collection -->
+          <fieldset>
+            <legend>6. Pass Type </legend>
+            <div class="mb-3">
+              <label class="form-label">6.1 Pass Type Required *</label>
+              <select class="form-select" name="pass_type">
+                <option value="">Select Pass Type</option>
+                <option value="monthly"> Monthly </option>
+                <option value="quaterly">Quaterly </option>
+                <option value="half_yearly">Half Year </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-success">Apply</button>
+        </form>
+      </div>
+
+      <!-- Student Metro Pass Form -->
+      <div id="studentMetroForm" class="mt-3" style="display: none">
+        <h3>Student Bus Pass Form</h3>
+        <form id="studentMetroPassForm" action="/studentMetroPassForm", method="POST" enctype="multipart/form-data">
+          <!-- 1. Student 10th Details -->
+          <fieldset>
+            <legend>1. Student 10th Details</legend>
+            <div class="mb-3">
+              <label class="form-label" >1.1 SSC Board Type *</label>
+              <select class="form-select" name="ssc_type">
+                <option value="SSC">SSC</option>
+                <option value="CBSE">CBSE</option>
+                <option value="ICSE">ICSE</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" >1.2 SSC Regular/Supplementary *</label>
+              <select class="form-select" name="ssc">
+                <option value="Regular">Regular</option>
+                <option value="Supplementary">Supplementary</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">1.3 SSC Year of Pass *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Year of Pass"
+                name="ssc_pass_year"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">1.4 SSC Hall Ticket No. *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Hall Ticket Number"
+                name="ssc_hall"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">1.5 Date of Birth *</label>
+              <input type="date" class="form-control" name="dob" />
+            </div>
+          </fieldset>
+
+          <!-- 2. Student Details -->
+          <fieldset>
+            <legend>2. Student Details</legend>
+            <div class="mb-3">
+              <label class="form-label">2.1 Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                placeholder="Enter Name"
+                name="name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.2 Father's/Guardian's Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                placeholder="Enter Father's/Guardian's Name"
+                name="gaurdian_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.4 Gender *</label>
+              <div>
+                <input type="radio" name="gender" value="Male" /> Male
+                <input type="radio" name="gender" value="Female" /> Female
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.5 Aadhaar No *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Aadhaar Number"
+                name="aadhar_no"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.6 WhatsApp No *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter WhatsApp Number"
+                name="WhatsApp_no"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.7 Email</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Enter Email"
+                name="email"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.8 Employee Children *</label>
+              <div>
+                <input type="radio" name="employee" value="Yes" /> Yes
+                <input type="radio" name="employee" value="No" /> No
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">2.9 Upload Photo *</label>
+              <input type="file" class="form-control" name="photo" />
+            </div>
+          </fieldset>
+
+          <!-- 3. Residential Address Details -->
+          <fieldset>
+            <legend>3. Residential Address Details</legend>
+            <div class="mb-3">
+              <label class="form-label">3.1 District *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter District Name"
+                name="district"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.2 Mandal *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Mandal Name"
+                name="mandal"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.3 Village *</label>
+              <input
+                type="text"
+                class="form-control"
+                name="village"
+                placeholder="Enter Village Name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.4 Address *</label>
+              <input
+                type="text"
+                class="form-control"
+                maxlength="20"
+                placeholder="Enter Address"
+                name="address"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">3.5 Postal Code *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Postal Code"
+                name="postal_code"
+              />
+            </div>
+          </fieldset>
+
+          <!-- 4. Institution Details -->
+          <fieldset>
+            <legend>4. Institution Details</legend>
+            <p>
+              Hyderabad city pass applicants should select the institution
+              address as **HYDERABAD**.
+            </p>
+            <div class="mb-3">
+              <label class="form-label">4.1 District *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter District Name"
+                name="institution_district"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.2 Mandal *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Mandal Name"
+                name="institution_mandal"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.3 Institution Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Institute Name"
+                name="institution_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.4 Course Name *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Course Name"
+                name="course_name"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.6 Admission No *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Admission No"
+                name="admission_no"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.7 College ID Photo *</label>
+              <input type="file" class="form-control" name="id_photo" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">4.8 Institution Address *</label>
+              <textarea class="form-control" name="institution_address"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- 5. Mode of Payment -->
+          <fieldset>
+            <legend>5. Mode of Payment</legend>
+            <div class="mb-3">
+              <label class="form-label">Payment Mode *</label>
+              <select class="form-select" name="payment_mode">
+                <option value="">Select Payment Mode</option>
+                <option value="upi">UPI</option>
+                <option value="netbanking">Netbanking</option>
+                <option value="credit_or_debit_card">Credit/Debit Card </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- 6. Route Details & Pass Collection -->
+          <fieldset>
+            <legend>6. Pass Type </legend>
+            <div class="mb-3">
+              <label class="form-label">6.1 Pass Type Required *</label>
+              <select class="form-select" name="pass_type">
+                <option value="">Select Pass Type</option>
+                <option value="monthly"> Monthly </option>
+                <option value="quaterly">Quaterly </option>
+                <option value="half_yearly">Half Year </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-success">Apply</button>
+        </form>
+      </div>
+
+      <!-- General Metro Pass Form -->
+      <div id="generalMetroForm" class="mt-3" style="display: none"> 
+        <h3>General Bus Pass Form</h3>
+        <form id="generalMetroPassForm" action="/generalMetroPassForm" method="POST" enctype="multipart/form-data">
+          <!-- Applicant Details -->
+          <fieldset class="border p-3 mb-3">
+            <legend class="w-auto">Applicant Details</legend>
+            <div class="mb-3">
+              <label class="form-label">Name *</label>
+              <input type="text" class="form-control" name="name" value="{{ name }}" readonly />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Father’s / Guardian’s Name *</label>
+              <input type="text" class="form-control" required name="gaurdian_name" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Date of Birth *</label>
+              <input type="date" class="form-control" required name="dob"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"> Upload Photo *</label>
+              <input type="file" class="form-control" name="photo" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Gender *</label>
+              <div>
+                <input type="radio" name="gender" value="male" required /> Male
+                <input type="radio" name="gender" value="female" required />
+                Female
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Aadhaar No</label>
+              <input type="text" class="form-control" name="aadhar_no"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">E-mail Id *</label>
+              <input type="email" class="form-control" name="email" value="{{ email }}" readonly />
+            </div>
+          </fieldset>
+
+          <!-- Pass Type Details -->
+          <fieldset class="border p-3 mb-3">
+            <div class="mb-3">
+              <label class="form-label">3.1 District *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter District Name"
+                name="district"
+              />
+            </div>
+            <legend class="w-auto">Pass Type Details</legend>
+            <div class="mb-3">
+              <label class="form-label">Pass Type *</label>
+              <select class="form-select" name="pass_type">
+                <option value="">Select Pass Type</option>
+                <option value="Monthly"> Monthly </option>
+                <option value="Quaterly">Quaterly </option>
+                <option value="Half Yearly">Half Yearly </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- Mode of Payment & Pass Collection -->
+          <fieldset class="border p-3 mb-3">
+            <legend class="w-auto">Mode of Payment </legend>
+            <div class="mb-3">
+              <label class="form-label">Payment Mode *</label>
+              <select class="form-select" name="payment_mode">
+                <option value="">Select Payment Mode</option>
+                <option value="UPI">UPI</option>
+                <option value="Netbanking">Netbanking</option>
+                <option value="Credit/Debit Card">Credit/Debit Card </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-success">Apply</button>
+        </form>
+      </div>
+
+      <!-- General Bus Pass Form -->
+      <div id="generalBusForm" class="mt-3" style="display: none"> 
+        <h3>General Bus Pass Form</h3>
+        <form id="generalBusPassForm" action="/generalBusPassForm" method="POST" enctype="multipart/form-data">
+          <!-- Applicant Details -->
+          <fieldset class="border p-3 mb-3">
+            <legend class="w-auto">Applicant Details</legend>
+            <div class="mb-3">
+              <label class="form-label">Name *</label>
+              <input type="text" class="form-control" name="name" value="{{ name }}" readonly />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Father’s / Guardian’s Name *</label>
+              <input type="text" class="form-control" name="gaurdian_name" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Date of Birth *</label>
+              <input type="date" class="form-control" name="dob" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label"> Upload Photo *</label>
+              <input type="file" class="form-control" name="photo" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Gender *</label>
+              <div>
+                <input type="radio" name="gender" value="male" required /> Male
+                <input type="radio" name="gender" value="female" required />
+                Female
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Aadhaar No</label>
+              <input type="text" class="form-control" name="aadhar_no" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">E-mail Id *</label>
+              <input type="email" class="form-control" name="email" value="{{ email }}" readonly />
+            </div>
+          </fieldset>
+
+          <!-- Pass Type Details -->
+          <fieldset class="border p-3 mb-3">
+            <div class="mb-3">
+              <label class="form-label">3.1 District *</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter District Name"
+                name="district"
+              />
+            </div>
+            <legend class="w-auto" >Pass Type Details</legend>
+            <div class="mb-3">
+              <label class="form-label">Pass Type *</label>
+              <select class="form-select" name="pass_type">
+                <option value="">Select Pass Type</option>
+                <option value="monthly"> Monthly </option>
+                <option value="quaterly">Quaterly </option>
+                <option value="half_yearly">Half Year </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- Mode of Payment & Pass Collection -->
+          <fieldset class="border p-3 mb-3">
+            <legend class="w-auto">Mode of Payment </legend>
+            <div class="mb-3">
+              <label class="form-label">Payment Mode *</label>
+              <select class="form-select" name="payment_mode">
+                <option value="">Select Payment Mode</option>
+                <option value="upi">UPI</option>
+                <option value="netbanking">Netbanking</option>
+                <option value="credit_or_debit_card">Credit/Debit Card </option>
+              </select>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-success">Apply</button>
+        </form>
+      </div>
+
+      <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">Logout</a>
+      <a href="{{ url_for('view_transactions', role=role, name=name, email=email) }}" class="btn btn-primary mt-3">Transactions</a>
+      <a href="{{ url_for('view_tickets', role=role, name=name, email=email) }}" class="btn btn-primary mt-3">Tickets</a>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

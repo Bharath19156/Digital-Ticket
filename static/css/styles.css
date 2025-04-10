@@ -1,0 +1,36 @@
+/* Custom styling to center the box */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+}
+
+/* Styling the box to be square and have a background */
+.box {
+    text-align: center;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px; /* Fixed width for the square */
+    background-color: #f5f5f5; /* Background color for the square box */
+    height: 300px; /* Same height as width to make it a square */
+}
+
+/* Styling the buttons */
+.btn {
+    width: 100%; /* Make buttons full width */
+    margin-bottom: 15px; /* Space between buttons */
+}
+
+.card-hover {
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.card-hover:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
