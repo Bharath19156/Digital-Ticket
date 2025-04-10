@@ -132,6 +132,7 @@ def user_login():
 
 
 #Funtions to deal with the Genral Bus Passes
+
 def datafrom_generalPassBusForm():
     data={}
     name=request.form['name']
@@ -178,6 +179,7 @@ def generalBusPassForm():
     return redirect(url_for('user_login'))
 
 #Funtions to deal with the Genral Metro Passes
+
 def datafrom_generalPassMetroForm():
     data={}
     name=request.form['name']
@@ -223,76 +225,68 @@ def generalMetroPassForm():
     return redirect(url_for('user_login'))
 
 #Functions to deal with the Student Bus Passes
+
 def datafrom_studentPassBusForm():
-    data={}
-    ssc_type=request.form['ssc_type']
-    data['ssc_type']=ssc_type
-    ssc=request.form['ssc']
-    data['ssc']=ssc
-    ssc_pass_year=request.form['ssc_pass_year']
-    data['ssc_pass_year']=ssc_pass_year
-    ssc_hall=request.form['ssc_hall']
-    data['ssc_hall']=ssc_hall
-    dob=request.form['dob']
-    data['dob']=dob
-    name=request.form['name']
-    data['name']=name
-    gaurdian_name=request.form['gaurdian_name']
-    data['gaurdian_name']=gaurdian_name
-    gender=request.form['gender']
-    data['gender']=gender
-    aadhar_no=request.form['aadhar_no']
-    data['aadhar_no']=aadhar_no
-    WhatsApp_no=request.form['WhatsApp_no']
-    data['WhatsApp_no']=WhatsApp_no
-    email=request.form['email']
-    data['email']=email
-    employee=request.form['employee']
-    data['employee']=employee
-    
+    data = {}
+
+    # 1. SSC Details
+    data['ssc_type'] = request.form['ssc_type']
+    data['ssc'] = request.form['ssc']
+    data['ssc_pass_year'] = request.form['ssc_pass_year']
+    data['ssc_hall'] = request.form['ssc_hall']
+    data['dob'] = request.form['dob']
+
+    # 2. Student Details
+    data['name'] = request.form['name']
+    data['gaurdian_name'] = request.form['gaurdian_name']
+    data['gender'] = request.form['gender']
+    data['aadhar_no'] = request.form['aadhar_no']
+    data['WhatsApp_no'] = request.form['WhatsApp_no']
+    data['email'] = request.form.get('email', '')
+    data['employee'] = request.form['employee']
+
+    # 2.9 Upload Photo
     photo = request.files.get('photo')
     if photo:
         file_id = fs.put(photo, filename=photo.filename, content_type=photo.content_type)
         print("Uploaded photo ID:", file_id)
-        data['photo'] = file_id
+        data['photo'] = str(file_id)
+
+    # 3. Residential Address
+    data['district'] = request.form['district']
+    data['mandal'] = request.form['mandal']
+    data['village'] = request.form['village']
+    data['address'] = request.form['address']
+    data['postal_code'] = request.form['postal_code']
+
+    # 4. Institution Details
+    data['institution_district'] = request.form['institution_district']
+    data['institution_mandal'] = request.form['institution_mandal']
+    data['institution_name'] = request.form['institution_name']
+    data['course_name'] = request.form['course_name']
+    data['admission_no'] = request.form['admission_no']
+    data['institution_address'] = request.form['institution_address']
+
+    # 4.7 Upload College ID Photo
     id_photo = request.files.get('id_photo')
     if id_photo:
-        file_id = fs.put(photo, filename=photo.filename, content_type=photo.content_type)
-        print("Uploaded College ID:", file_id)
-        data['id_photo'] = file_id
+        id_file_id = fs.put(id_photo, filename=id_photo.filename, content_type=id_photo.content_type)
+        print("Uploaded ID Photo ID:", id_file_id)
+        data['id_photo'] = str(id_file_id)
 
-    district=request.form['district']
-    data['district']=district
-    mandal=request.form['mandal']
-    data['mandal']=mandal
-    village=request.form['village']
-    data['village']=village
-    address=request.form['address']
-    data['address']=address
-    postal_code=request.form['postal_code']
-    data['postal_code']=postal_code
-    institution_district=request.form['institution_district']
-    data['institution_district']=institution_district
-    institution_mandal=request.form['institution_mandal']
-    data['institution_mandal']=institution_mandal
-    institution_name=request.form['institution_name']
-    data['institution_name']=institution_name
-    course_name=request.form['course_name']
-    data['course_name']=course_name
-    admission_no=request.form['admission_no']
-    data['admission_no']=admission_no
-    institution_address=request.form['institution_address']
-    data['institution_address']=institution_address
-    payment_mode=request.form['payment_mode']
-    data['payment_mode']=payment_mode
-    pass_type=request.form['pass_type']
-    data['pass_type']=pass_type
+    # 5. Payment Mode
+    data['payment_mode'] = request.form['payment_mode']
+
+    # 6. Pass Type
+    data['pass_type'] = request.form['pass_type']
+    #role details
     user_email=session.get('email')
     user_name=session.get('user')
     role=session.get('role')
     data["user_email"]=user_email
     data['user_name']=user_name
     data['role']=role
+
     return data
 @app.route('/studentBusPassForm',methods=['POST', 'GET'] )
 def studentBusPassForm():
@@ -310,76 +304,66 @@ def studentBusPassForm():
 
 #functions to deal with the Student Metro passes
 def datafrom_studentPassMetroForm():
-    data={}
-    ssc_type=request.form['ssc_type']
-    data['ssc_type']=ssc_type
-    ssc=request.form['ssc']
-    data['ssc']=ssc
-    ssc_pass_year=request.form['ssc_pass_year']
-    data['ssc_pass_year']=ssc_pass_year
-    ssc_hall=request.form['ssc_hall']
-    data['ssc_hall']=ssc_hall
-    dob=request.form['dob']
-    data['dob']=dob
-    name=request.form['name']
-    data['name']=name
-    gaurdian_name=request.form['gaurdian_name']
-    data['gaurdian_name']=gaurdian_name
-    gender=request.form['gender']
-    data['gender']=gender
-    aadhar_no=request.form['aadhar_no']
-    data['aadhar_no']=aadhar_no
-    WhatsApp_no=request.form['WhatsApp_no']
-    data['WhatsApp_no']=WhatsApp_no
-    email=request.form['email']
-    data['email']=email
-    employee=request.form['employee']
-    data['employee']=employee
-    
+    data = {}
+
+    # 1. SSC Details
+    data['ssc_type'] = request.form['ssc_type']
+    data['ssc'] = request.form['ssc']
+    data['ssc_pass_year'] = request.form['ssc_pass_year']
+    data['ssc_hall'] = request.form['ssc_hall']
+    data['dob'] = request.form['dob']
+
+    # 2. Student Details
+    data['name'] = request.form['name']
+    data['gaurdian_name'] = request.form['gaurdian_name']
+    data['gender'] = request.form['gender']
+    data['aadhar_no'] = request.form['aadhar_no']
+    data['WhatsApp_no'] = request.form['WhatsApp_no']
+    data['email'] = request.form.get('email', '')
+    data['employee'] = request.form['employee']
+
+    # 2.9 Upload Photo
     photo = request.files.get('photo')
     if photo:
         file_id = fs.put(photo, filename=photo.filename, content_type=photo.content_type)
         print("Uploaded photo ID:", file_id)
-        data['photo'] = file_id
+        data['photo'] = str(file_id)
+
+    # 3. Residential Address
+    data['district'] = request.form['district']
+    data['mandal'] = request.form['mandal']
+    data['village'] = request.form['village']
+    data['address'] = request.form['address']
+    data['postal_code'] = request.form['postal_code']
+
+    # 4. Institution Details
+    data['institution_district'] = request.form['institution_district']
+    data['institution_mandal'] = request.form['institution_mandal']
+    data['institution_name'] = request.form['institution_name']
+    data['course_name'] = request.form['course_name']
+    data['admission_no'] = request.form['admission_no']
+    data['institution_address'] = request.form['institution_address']
+
+    # 4.7 Upload College ID Photo
     id_photo = request.files.get('id_photo')
     if id_photo:
-        file_id = fs.put(photo, filename=photo.filename, content_type=photo.content_type)
-        print("Uploaded College ID:", file_id)
-        data['id_photo'] = file_id
+        id_file_id = fs.put(id_photo, filename=id_photo.filename, content_type=id_photo.content_type)
+        print("Uploaded ID Photo ID:", id_file_id)
+        data['id_photo'] = str(id_file_id)
 
-    district=request.form['district']
-    data['district']=district
-    mandal=request.form['mandal']
-    data['mandal']=mandal
-    village=request.form['village']
-    data['village']=village
-    address=request.form['address']
-    data['address']=address
-    postal_code=request.form['postal_code']
-    data['postal_code']=postal_code
-    institution_district=request.form['institution_district']
-    data['institution_district']=institution_district
-    institution_mandal=request.form['institution_mandal']
-    data['institution_mandal']=institution_mandal
-    institution_name=request.form['institution_name']
-    data['institution_name']=institution_name
-    course_name=request.form['course_name']
-    data['course_name']=course_name
-    admission_no=request.form['admission_no']
-    data['admission_no']=admission_no
-    institution_address=request.form['institution_address']
-    data['institution_address']=institution_address
-    payment_mode=request.form['payment_mode']
-    data['payment_mode']=payment_mode
-    pass_type=request.form['pass_type']
-    data['pass_type']=pass_type
+    # 5. Payment Mode
+    data['payment_mode'] = request.form['payment_mode']
+
+    # 6. Pass Type
+    data['pass_type'] = request.form['pass_type']
+    #role details
     user_email=session.get('email')
     user_name=session.get('user')
     role=session.get('role')
     data["user_email"]=user_email
     data['user_name']=user_name
     data['role']=role
-    pprint.pprint(data)
+
     return data
 @app.route('/studentMetroPassForm',methods=['POST', 'GET'] )
 def studentMetroPassForm():
@@ -395,6 +379,7 @@ def studentMetroPassForm():
     return redirect(url_for('user_login'))
 
 #funtion to display the transactions made
+
 @app.route('/user_login/view_transactions/<role>/<name>/<email>')
 def view_transactions(role, name, email):
     datafrom_generalPassBusForm=[]
@@ -413,6 +398,7 @@ def view_transactions(role, name, email):
     data=datafrom_generalPassBusForm + datafrom_generalPassMetroForm + datafrom_studentPassBusForm + datafrom_studentMetroBusForm
     return render_template('view_transactions.html', data=data)
 
+#function to display the active tickets
 
 @app.route('/user_login/view_tickets/<role>/<name>/<email>')
 def view_tickets(role,name,email):
@@ -744,7 +730,9 @@ def get_conductor_form_details():
     return redirect(url_for('conductor_login'))
 
 
-
+#-------------------------------------------------------------------------
+#---------------------------------Main------------------------------------
+#-------------------------------------------------------------------------
 
 
 
