@@ -124,28 +124,8 @@
       </div>
     </div>
   </div>
-  <script>
-    const video = document.getElementById('scanner');
-    let stream = null;
 
-    document.getElementById('scannerModal').addEventListener('shown.bs.modal', async function () {
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-            video.srcObject = stream;
-        } catch (err) {
-            alert('Camera access denied or unavailable.');
-            console.error(err);
-        }
-    });
-
-    function stopCamera() {
-        if (stream) {
-            const tracks = stream.getTracks();
-            tracks.forEach(track => track.stop());
-            video.srcObject = null;
-        }
-    }
-</script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   
 </body>
 </html>

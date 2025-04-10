@@ -133,6 +133,32 @@ function showPopup(status, itemId, name, validity, userType, remarks) {
   
   
 
+// Get references to video element and stream
+const video = document.getElementById('scanner');
+let stream = null;
+
+// Event listener for when the scanner modal is shown
+document.getElementById('scannerModal').addEventListener('shown.bs.modal', async function () {
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" }
+        });
+        video.srcObject = stream;
+    } catch (err) {
+        alert('Camera access denied or unavailable.');
+        console.error(err);
+    }
+});
+
+// Function to stop the camera stream when modal closes
+function stopCamera() {
+    if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        video.srcObject = null;
+    }
+}
+
 
 
 
