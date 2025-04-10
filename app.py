@@ -721,9 +721,27 @@ def serve_qr_code():
 
 @app.route('/conductor_login')
 def conductor_login():
-    return render_template('conductor_login.html', message="Hi conductor, welcome back!",email=session.get('email'), name=session.get('user'),role=session.get('role'))
+    email=session.get('email')
+    name=session.get('user')
+    role=session.get('role')
+    query={'name':name,'role':role,'email':email}
+    data=list(collection_conductor.find(query))
+    pprint.pprint(data)
+    return render_template('conductor_login.html', message="Hi conductor, welcome back!",email=session.get('email'), name=session.get('user'),role=session.get('role'),data=data)
 
 
+
+@app.route('/get_conductor_form_details', methods=['POST'])
+def get_conductor_form_details():
+    email = request.form.get('email')
+    role = request.form.get('role')
+    city= request.form.get('city')
+    bus_no = request.form.get('bus_no')
+    log_date = request.form.get('log_date')
+    name=request.form.get('name')
+    query={'name':name,'role':role,'email':email,'city':city,'bus_no':bus_no,'log_date':log_date}
+    collection_conductor.insert_one(query)
+    return redirect(url_for('conductor_login'))
 
 
 
