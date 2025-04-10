@@ -637,7 +637,7 @@ def update_db():
     found_collection.update_one({"_id": object_id}, {"$set": update_fields})
     print("📌 Document updated successfully.")
 
-    return "Application Approved and QR generated", 200
+    return redirect('/admin_login')
 
 @app.route('/reject_db', methods=['POST'])
 def reject_db():
@@ -687,7 +687,7 @@ def reject_db():
     found_collection.update_one({"_id": object_id}, {"$set": update_fields})
     print("📌 Document marked as rejected with remarks.")
 
-    return "Application Rejected with remarks", 200
+    return redirect('/admin_login')
 
 
 
@@ -721,7 +721,7 @@ def serve_qr_code():
 
 @app.route('/conductor_login')
 def conductor_login():
-    return render_template('conductor_login.html', message="Hi conductor, welcome back!")
+    return render_template('conductor_login.html', message="Hi conductor, welcome back!",email=session.get('email'), name=session.get('user'),role=session.get('role'))
 
 
 
