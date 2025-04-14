@@ -416,7 +416,7 @@ def view_tickets(role,name,email):
     if list(collection_studentMetroPass.find(query)):
         datafrom_studentMetroBusForm=list(collection_studentMetroPass.find(query))
     data=datafrom_generalPassBusForm + datafrom_generalPassMetroForm + datafrom_studentPassBusForm + datafrom_studentMetroBusForm
-    return render_template('view_tickets.html', data=data)
+    return render_template('view_tickets.html', data=data, role=role, name=name, email=email)
 
 
 

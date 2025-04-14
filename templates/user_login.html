@@ -12,10 +12,6 @@
   <body>
     {% include 'header.html' %}
     <div class="container mt-5">
-      <h2>{{ message }}</h2>
-      <h2> {{ email }} </h2>
-      <h2> {{ name }} </h2>
-      <h2> {{ role }} </h2>
 
       <!-- Dropdown -->
       <label for="passTypeSelect" class="form-label">Select Pass Type</label>
@@ -713,9 +709,7 @@
         </form>
       </div>
 
-      <a href="{{ url_for('home') }}" class="btn btn-primary mt-3">Logout</a>
-      <a href="{{ url_for('view_transactions', role=role, name=name, email=email) }}" class="btn btn-primary mt-3">Transactions</a>
-      <a href="{{ url_for('view_tickets', role=role, name=name, email=email) }}" class="btn btn-primary mt-3">Tickets</a>
+      
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
