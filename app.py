@@ -30,6 +30,8 @@ collection_generalMetroPass=db["generalMetroPass_details"]
 collection_studentBusPass=db['studentBusPass_details']
 collection_studentMetroPass=db['studentMetroPass_details']
 collection_conductor=db['conductor_deatils']
+collection_fare=db['fare_prices']
+
 
 
 
@@ -53,7 +55,8 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    fare_data=list(collection_fare.find())
+    return render_template('index.html',fare_data=fare_data)
 
 @app.route('/user')
 def user():
@@ -698,7 +701,28 @@ def serve_qr_code():
     return send_file("qr.png", mimetype='image/png') 
 
 
+@app.route('/fare_prices')
+def fare_prices():
+    data=list(collection_fare.find())
+    return render_template('fare_prices.html',data=data)
 
+
+@app.route('/update-fare', methods=['POST'])
+def update_fare():
+    monthly = request.form['monthly']
+    quarterly = request.form['quarterly']
+    half_yearly = request.form['half_yearly']
+    user_type=request.form['user_type']
+    print(f"Monthly: {monthly}, Quarterly: {quarterly}, Half Yearly: {half_yearly}, User Type:{user_type}")
+    collection_fare.update_one(
+        {"user_type": user_type},  # Match the user_type
+        {"$set": {  # Update the values
+            "monthly": monthly,
+            "quarterly": quarterly,
+            "half_yearly": half_yearly
+        }}
+    )
+    return redirect('fare_prices')
 #-------------------------------------------------------------------------
 #-----------------------------Conductor Page------------------------------
 #-------------------------------------------------------------------------
