@@ -306,6 +306,7 @@ def studentBusPassForm():
 
 
 #functions to deal with the Student Metro passes
+
 def datafrom_studentPassMetroForm():
     data = {}
 
@@ -696,16 +697,20 @@ def print_id():
     get_qr(data.get('id'))
     return jsonify({ 'qr_url': '/qr_code' })  # Send URL back
 
+
+
 @app.route('/qr_code')
 def serve_qr_code():
     return send_file("qr.png", mimetype='image/png') 
 
+#function to Display the fare price table in the admin page
 
 @app.route('/fare_prices')
 def fare_prices():
     data=list(collection_fare.find())
     return render_template('fare_prices.html',data=data)
 
+#funtion to update the fare prices in the admin page
 
 @app.route('/update-fare', methods=['POST'])
 def update_fare():
@@ -723,6 +728,11 @@ def update_fare():
         }}
     )
     return redirect('fare_prices')
+
+
+
+
+
 #-------------------------------------------------------------------------
 #-----------------------------Conductor Page------------------------------
 #-------------------------------------------------------------------------
@@ -757,17 +767,6 @@ def get_conductor_form_details():
 #-------------------------------------------------------------------------
 #---------------------------------Main------------------------------------
 #-------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
