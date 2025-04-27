@@ -14,9 +14,6 @@ import io
 from PIL import Image
 
 
-
-
-
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 
@@ -29,7 +26,7 @@ collection_generalBusPass=db["generalBusPass_details"]
 collection_generalMetroPass=db["generalMetroPass_details"]
 collection_studentBusPass=db['studentBusPass_details']
 collection_studentMetroPass=db['studentMetroPass_details']
-collection_conductor=db['conductor_deatils']
+collection_conductor=db['conductor_details']
 collection_fare=db['fare_prices']
 
 
@@ -590,7 +587,7 @@ def update_db():
         end_date = start_date + timedelta(days=30)
     elif pass_type == 'quaterly':
         end_date = start_date + timedelta(days=90)
-    elif pass_type == 'half-yearly':
+    elif pass_type == 'half_yearly':
         end_date = start_date + timedelta(days=180)
     else:
         return "Invalid pass type", 400
@@ -708,6 +705,7 @@ def serve_qr_code():
 @app.route('/fare_prices')
 def fare_prices():
     data=list(collection_fare.find())
+    pprint.pprint(data)
     return render_template('fare_prices.html',data=data)
 
 #funtion to update the fare prices in the admin page
@@ -770,4 +768,4 @@ def get_conductor_form_details():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
