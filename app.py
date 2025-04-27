@@ -402,11 +402,55 @@ def view_transactions(role, name, email):
 #function to display the active tickets
 
 @app.route('/user_login/view_tickets/<role>/<name>/<email>')
+def view_tickets(role, name, email):    
+    datafrom_generalPassBusForm = []
+    datafrom_generalPassMetroForm = []
+    datafrom_studentPassBusForm = []
+    datafrom_studentpassMetroForm = []
+
+    query = {"user_name": name, "user_email": email, "role": role, "status": "approved"}
+
+    if list(collection_generalBusPass.find(query)):
+        datafrom_generalPassBusForm = list(collection_generalBusPass.find(query))
+    if list(collection_generalMetroPass.find(query)):
+        datafrom_generalPassMetroForm = list(collection_generalMetroPass.find(query))
+    if list(collection_studentBusPass.find(query)):
+        datafrom_studentPassBusForm = list(collection_studentBusPass.find(query))
+    if list(collection_studentMetroPass.find(query)):
+        datafrom_studentpassMetroForm = list(collection_studentMetroPass.find(query))
+
+    data = datafrom_generalPassBusForm + datafrom_generalPassMetroForm + datafrom_studentPassBusForm + datafrom_studentpassMetroForm
+
+    # Now filter data based on validity (without updating DB)
+    filtered_data = []
+    today = datetime.today()
+
+    for ticket in data:
+        validity_period = ticket.get('validity', '')
+        if 'to' in validity_period:
+            try:
+                _, to_date_str = validity_period.split('to')
+                to_date_str = to_date_str.strip()  # remove extra spaces
+                to_date = datetime.strptime(to_date_str, '%d/%m/%Y')
+                if today <= to_date:
+                    filtered_data.append(ticket)
+                # else: (do nothing for expired passes)
+            except Exception as e:
+                print(f"Error parsing validity date: {e}")
+    
+    pprint.pprint(filtered_data)
+
+    return render_template('view_tickets.html', data=filtered_data, role=role, name=name, email=email)
+
+
+
+"""
+@app.route('/user_login/view_tickets/<role>/<name>/<email>')
 def view_tickets(role,name,email):
     datafrom_generalPassBusForm=[]
     datafrom_generalPassMetroForm=[]
     datafrom_studentPassBusForm=[]
-    datafrom_studentMetroBusForm=[]
+    datafrom_studentpassMetroForm=[]
     query = {"user_name": name, "user_email": email, "role": role,"status":"approved"}
     if list(collection_generalBusPass.find(query)):
         datafrom_generalPassBusForm = list(collection_generalBusPass.find(query))
@@ -415,9 +459,12 @@ def view_tickets(role,name,email):
     if list(collection_studentBusPass.find(query)):
         datafrom_studentPassBusForm=list(collection_studentBusPass.find(query))
     if list(collection_studentMetroPass.find(query)):
-        datafrom_studentMetroBusForm=list(collection_studentMetroPass.find(query))
-    data=datafrom_generalPassBusForm + datafrom_generalPassMetroForm + datafrom_studentPassBusForm + datafrom_studentMetroBusForm
+        datafrom_studentpassMetroForm=list(collection_studentMetroPass.find(query))
+    data=datafrom_generalPassBusForm + datafrom_generalPassMetroForm + datafrom_studentPassBusForm + datafrom_studentpassMetroForm
+    pprint.pprint(data)
     return render_template('view_tickets.html', data=data, role=role, name=name, email=email)
+"""
+
 
 
 
